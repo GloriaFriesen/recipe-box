@@ -79,4 +79,17 @@ public class Tag {
       return recipes;
     }
   }
+
+  public void delete() {
+    try(Connection con = DB.sql2o.open()) {
+      String joinDeleteQuery = "DELETE FROM recipes_tags WHERE tag_id=:tag_id";
+      con.createQuery(joinDeleteQuery)
+        .addParameter("tag_id", this.getId())
+        .executeUpdate();
+      String sql = "DELETE FROM tags WHERE id=:id";
+      con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
 }

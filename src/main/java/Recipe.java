@@ -113,4 +113,25 @@ public class Recipe {
         .executeUpdate();
     }
   }
+
+  public void delete() {
+    try(Connection con = DB.sql2o.open()) {
+      String ingredientDeleteQuery = "DELETE FROM ingredients WHERE recipe_id=:recipe_id";
+      con.createQuery(ingredientDeleteQuery)
+        .addParameter("recipe_id", this.getId())
+        .executeUpdate();
+      String instructionDeleteQuery = "DELETE FROM instructions WHERE recipe_id=:recipe_id";
+      con.createQuery(instructionDeleteQuery)
+        .addParameter("recipe_id", this.getId())
+        .executeUpdate();
+      String joinDeleteQuery = "DELETE FROM recipes_tags WHERE recipe_id=:recipe_id";
+      con.createQuery(joinDeleteQuery)
+        .addParameter("recipe_id", this.getId())
+        .executeUpdate();
+      String sql = "DELETE FROM recipes WHERE id=:id";
+      con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
 }

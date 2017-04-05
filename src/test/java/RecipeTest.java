@@ -115,4 +115,36 @@ public class RecipeTest {
     Tag savedTag = testRecipe.getTags().get(0);
     assertTrue(testTag.equals(savedTag));
   }
+
+  @Test
+  public void delete_deletesRecipe_true() {
+    Recipe testRecipe = new Recipe("Lemon Meringue Pie");
+    testRecipe.save();
+    testRecipe.delete();
+    assertEquals(0, Recipe.all().size());
+  }
+
+  @Test
+  public void delete_deletesAllTagsAndRecipesAssociations() {
+    Recipe testRecipe = new Recipe("Lemon Meringue Pie");
+    testRecipe.save();
+    Tag testTag = new Tag("yummy");
+    testTag.save();
+    testRecipe.addTag(testTag);
+    testRecipe.delete();
+    assertEquals(0, testTag.getRecipes().size());
+  }
+
+  @Test
+  public void delete_deletesIngredientsAndInstructionsWhenRecipeIsDeleted() {
+    Recipe testRecipe = new Recipe("Lemon Meringue Pie");
+    testRecipe.save();
+    Ingredient testIngredient = new Ingredient(testRecipe.getId(), "1 cup", "sugar");
+    testIngredient.save();
+    Instruction testInstruction = new Instruction(testRecipe.getId(), "Whip it. Whip it good.");
+    testInstruction.save();
+    testRecipe.delete();
+    assertEquals(0, testRecipe.getInstructions().size());
+    assertEquals(0, testRecipe.getIngredients().size());
+  }
 }
