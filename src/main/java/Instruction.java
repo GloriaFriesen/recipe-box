@@ -31,8 +31,16 @@ public class Instruction {
     return step;
   }
 
+  public void setStep(int step){
+    this.step = step;
+  }
+
   public String getInstructionText(){
     return instruction_text;
+  }
+
+  public void setInstructionText(String instruction_text){
+    this.instruction_text = instruction_text;
   }
 
   @Override
@@ -82,6 +90,17 @@ public class Instruction {
       con.createQuery(sql)
         .addParameter("id", this.getId())
         .executeUpdate();
+    }
+  }
+
+  public void update() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE instructions SET step = :step, instruction_text = :instruction_text WHERE id = :id";
+      con.createQuery(sql)
+      .addParameter("step", this.step)
+      .addParameter("instruction_text", this.instruction_text)
+      .addParameter("id", this.id)
+      .executeUpdate();
     }
   }
 }

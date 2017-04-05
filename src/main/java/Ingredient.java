@@ -31,8 +31,16 @@ public class Ingredient {
     return measure;
   }
 
+  public void setMeasure(String measure) {
+    this.measure = measure;
+  }
+
   public String getIngredientText() {
     return ingredient_text;
+  }
+
+  public void setIngredientText(String ingredient_text) {
+    this.ingredient_text = ingredient_text;
   }
 
   @Override
@@ -82,6 +90,17 @@ public class Ingredient {
       con.createQuery(sql)
         .addParameter("id", this.getId())
         .executeUpdate();
+    }
+  }
+
+  public void update() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE ingredients SET measure = :measure, ingredient_text = :ingredient_text WHERE id=:id";
+      con.createQuery(sql)
+      .addParameter("measure", this.measure)
+      .addParameter("ingredient_text", this.ingredient_text)
+      .addParameter("id", this.id)
+      .executeUpdate();
     }
   }
 }

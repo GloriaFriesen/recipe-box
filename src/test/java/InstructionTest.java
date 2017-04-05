@@ -106,4 +106,18 @@ public class InstructionTest {
     testInstruction.delete();
     assertEquals(0, Instruction.all().size());
   }
+
+  @Test
+  public void update_updatesInstruction_true() {
+    Recipe testRecipe = new Recipe("Lemon Meringue Pie");
+    testRecipe.save();
+    Instruction testInstruction = new Instruction(testRecipe.getId(), "Beat eggs until they form soft peaks.");
+    testInstruction.save();
+    testInstruction.setStep(3);
+    testInstruction.setInstructionText("Beat eggs until they form stiff peaks.");
+    testInstruction.update();
+    Instruction savedInstruction = Instruction.all().get(0);
+    assertEquals(3, savedInstruction.getStep());
+    assertEquals("Beat eggs until they form stiff peaks.", savedInstruction.getInstructionText());    
+  }
 }

@@ -82,4 +82,16 @@ public class IngredientTest {
     testIngredient.delete();
     assertEquals(0, Ingredient.all().size());
   }
+
+  @Test
+  public void update_updatesIngredient_true() {
+    Ingredient testIngredient = new Ingredient(1, "1 cup", "sugar");
+    testIngredient.save();
+    testIngredient.setMeasure("1/2 cup");
+    testIngredient.setIngredientText("brown sugar");
+    testIngredient.update();
+    Ingredient savedIngredient = Ingredient.all().get(0);
+    assertEquals("1/2 cup", savedIngredient.getMeasure());
+    assertEquals("brown sugar", savedIngredient.getIngredientText());    
+  }
 }
