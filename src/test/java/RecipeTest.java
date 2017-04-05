@@ -104,4 +104,15 @@ public class RecipeTest {
     assertEquals(2, firstRecipe.getInstructions().size());
     assertFalse(firstRecipe.getInstructions().contains(thirdInstruction));
   }
+
+  @Test
+  public void addTag_addsTagToRecipe() {
+    Recipe testRecipe = new Recipe("Lemon Meringue Pie");
+    testRecipe.save();
+    Tag testTag = new Tag("yummy");
+    testTag.save();
+    testRecipe.addTag(testTag);
+    Tag savedTag = testRecipe.getTags().get(0);
+    assertTrue(testTag.equals(savedTag));
+  }
 }

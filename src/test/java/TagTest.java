@@ -62,4 +62,15 @@ public class TagTest {
     secondTag.save();
     assertEquals(Tag.find(secondTag.getId()), secondTag);
   }
+
+  @Test
+  public void getRecipes_returnsAllRecipes_List() {
+    Tag testTag = new Tag("yummy");
+    testTag.save();
+    Recipe testRecipe = new Recipe("Lemon Meringue");
+    testRecipe.save();
+    testRecipe.addTag(testTag);
+    List savedRecipes = testTag.getRecipes();
+    assertEquals(savedRecipes.size(), 1);
+  }
 }

@@ -59,4 +59,24 @@ public class Tag {
       return tag;
     }
   }
+
+  public List<Recipe> getRecipes() {
+    try(Connection con = DB.sql2o.open()) {
+      String joinQuery = "SELECT recipe_id FROM recipes_tags WHERE tag_id=:tag_id";
+      List<Integer> recipeIds = con.createQuery(joinQuery)
+        .addParameter("tag_id", this.getId())
+        .executeAndFetch(Integer.class);
+
+      List<Recipe> recipes = new ArrayList<Recipe>();
+
+      for(Integer recipeId : recipeIds) {
+        String recipeQuery = "SELECT * FROM recipes WHERE id=:recipe_id";
+        Recipe recipe = con.createQuery(recipeQuery)
+          .addParameter("recipe_id", recipeId)
+          .executeAndFetchFirst(Recipe.class);
+        recipes.add(recipe);
+      }
+      return recipes;
+    }
+  }
 }
