@@ -27,9 +27,9 @@ public class IngredientTest {
   }
 
   @Test
-  public void getIngredient_ingredientInstantiatesWithIngredient_String() {
+  public void getIngredientText_ingredientInstantiatesWithIngredientText_String() {
     Ingredient testIngredient = new Ingredient(1, "2 tbsp", "olive oil");
-    assertEquals("olive oil", testIngredient.getIngredient());
+    assertEquals("olive oil", testIngredient.getIngredientText());
   }
 
   @Test
@@ -61,7 +61,7 @@ public class IngredientTest {
   }
 
   @Test
-  public void all_returnsAllInancesOfIngredient_true() {
+  public void all_returnsAllInstancesOfIngredient_true() {
     Ingredient firstIngredient = new Ingredient(1, "2 tbsp", "olive oil");
     firstIngredient.save();
     Ingredient secondIngredient = new Ingredient(1, "1 cup", "sugar");

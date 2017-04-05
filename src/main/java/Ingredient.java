@@ -11,12 +11,12 @@ public class Ingredient {
   private int id;
   private int recipe_id;
   private String measure;
-  private String ingredient;
+  private String ingredient_text;
 
-  public Ingredient(int recipe_id, String measure, String ingredient) {
+  public Ingredient(int recipe_id, String measure, String ingredient_text) {
     this.recipe_id = recipe_id;
     this.measure = measure;
-    this.ingredient = ingredient;
+    this.ingredient_text = ingredient_text;
   }
 
   public int getId() {
@@ -31,8 +31,8 @@ public class Ingredient {
     return measure;
   }
 
-  public String getIngredient() {
-    return ingredient;
+  public String getIngredientText() {
+    return ingredient_text;
   }
 
   @Override
@@ -42,18 +42,18 @@ public class Ingredient {
     } else {
       Ingredient newIngredient = (Ingredient) otherIngredient;
       return this.getMeasure().equals(newIngredient.getMeasure()) &&
-      this.getIngredient().equals(newIngredient.getIngredient()) &&
+      this.getIngredientText().equals(newIngredient.getIngredientText()) &&
       this.getRecipeId() == newIngredient.getRecipeId();
     }
   }
 
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO ingredients (recipe_id, measure, ingredient) VALUES (:recipe_id, :measure, :ingredient)";
+      String sql = "INSERT INTO ingredients (recipe_id, measure, ingredient_text) VALUES (:recipe_id, :measure, :ingredient_text)";
       this.id = (int) con.createQuery(sql, true)
         .addParameter("recipe_id", recipe_id)
         .addParameter("measure", measure)
-        .addParameter("ingredient", ingredient)
+        .addParameter("ingredient_text", ingredient_text)
         .executeUpdate()
         .getKey();
     }

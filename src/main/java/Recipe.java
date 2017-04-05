@@ -75,4 +75,12 @@ public class Recipe {
     }
   }
 
+  public List<Instruction> getInstructions() {
+    String sql = "SELECT * FROM instructions WHERE recipe_id=:id";
+    try(Connection con = DB.sql2o.open()) {
+      return con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeAndFetch(Instruction.class);
+    }
+  }
 }

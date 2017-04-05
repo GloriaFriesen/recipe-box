@@ -27,6 +27,12 @@ public class RecipeTest {
   }
 
   @Test
+  public void getRating_recipeInstantiatesWithRating_int() {
+    Recipe testRecipe = new Recipe("Spaghetti Carbonara");
+    assertEquals(0, testRecipe.getRating());
+  }
+
+  @Test
   public void equals_returnsTrueIfRecipesAreTheSame_true() {
     Recipe firstRecipe = new Recipe("Spaghetti Carbonara");
     Recipe secondRecipe = new Recipe("Spaghetti Carbonara");
@@ -81,7 +87,25 @@ public class RecipeTest {
     thirdIngredient.save();
     assertTrue(firstRecipe.getIngredients().get(0).equals(firstIngredient));
     assertTrue(firstRecipe.getIngredients().get(1).equals(secondIngredient));
+    assertEquals(2, firstRecipe.getIngredients().size());
     assertFalse(firstRecipe.getIngredients().contains(thirdIngredient));
   }
 
+  @Test
+  public void getInstructions_returnsAllInstructionsForThisRecipe_ListInstruction(){
+    Recipe firstRecipe = new Recipe("Lemon Meringue Pie");
+    firstRecipe.save();
+    Instruction firstInstruction = new Instruction(firstRecipe.getId(), "Beat eggs until they form soft peaks.");
+    firstInstruction.save();
+    Instruction secondInstruction = new Instruction(firstRecipe.getId(), "Beat eggs until they form soft peaks.");
+    secondInstruction.save();
+    Recipe secondRecipe = new Recipe("Rhubarb Pie");
+    secondRecipe.save();
+    Instruction thirdInstruction = new Instruction(secondRecipe.getId(), "Chop the rhubarb in 1 inch pieces and macerate with the sugar and cornstarch.");
+    thirdInstruction.save();
+    assertTrue(firstRecipe.getInstructions().get(0).equals(firstInstruction));
+    assertTrue(firstRecipe.getInstructions().get(1).equals(secondInstruction));
+    assertEquals(2, firstRecipe.getInstructions().size());
+    assertFalse(firstRecipe.getInstructions().contains(thirdInstruction));
+  }
 }
