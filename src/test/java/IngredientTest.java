@@ -74,4 +74,12 @@ public class IngredientTest {
     secondIngredient.save();
     assertEquals(Ingredient.find(secondIngredient.getId()), secondIngredient);
   }
+
+  @Test
+  public void delete_deletesIngredient_true() {
+    Ingredient testIngredient = new Ingredient(1, "1 cup", "sugar");
+    testIngredient.save();
+    testIngredient.delete();
+    assertEquals(0, Ingredient.all().size());
+  }
 }

@@ -75,4 +75,13 @@ public class Instruction {
       return instruction;
     }
   }
+
+  public void delete() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM instructions WHERE id=:id";
+      con.createQuery(sql)
+        .addParameter("id", this.getId())
+        .executeUpdate();
+    }
+  }
 }

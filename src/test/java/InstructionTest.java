@@ -96,4 +96,14 @@ public class InstructionTest {
     secondInstruction.save();
     assertEquals(Instruction.find(secondInstruction.getId()), secondInstruction);
   }
+
+  @Test
+  public void delete_deletesInstruction_true() {
+    Recipe testRecipe = new Recipe("Lemon Meringue Pie");
+    testRecipe.save();
+    Instruction testInstruction = new Instruction(testRecipe.getId(), "Beat eggs until they form soft peaks.");
+    testInstruction.save();
+    testInstruction.delete();
+    assertEquals(0, Instruction.all().size());
+  }
 }
