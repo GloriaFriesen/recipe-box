@@ -119,5 +119,25 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    post("recipes/:recipe_id/ingredients/:ingredient_id/remove", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Recipe recipe = Recipe.find(Integer.parseInt(request.params("recipe_id")));
+      Ingredient ingredient = Ingredient.find(Integer.parseInt(request.params("ingredient_id")));
+      ingredient.delete();
+      String url = String.format("/recipes/%d", recipe.getId());
+      response.redirect(url);
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("recipes/:recipe_id/instructions/:instruction_id/remove", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Recipe recipe = Recipe.find(Integer.parseInt(request.params("recipe_id")));
+      Instruction instruction = Instruction.find(Integer.parseInt(request.params("instruction_id")));
+      instruction.delete();
+      String url = String.format("/recipes/%d", recipe.getId());
+      response.redirect(url);
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
   }
 }

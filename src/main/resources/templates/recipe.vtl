@@ -6,7 +6,10 @@
   <p>Ingredients:</p>
   <ul>
     #foreach($ingredient in $ingredients)
-      <li>$ingredient.getMeasure() $ingredient.getIngredientText() <a href="#">Edit</a><a href="#">Delete</a></li>
+      <li>$ingredient.getMeasure() $ingredient.getIngredientText() <a href="#">Edit</a>
+      <form action="$recipe.getId()/ingredients/$ingredient.getId()/remove" method="post">
+        <button type="submit" class="btn btn-info">Remove</button>
+      </form>
     #end
   </ul>
 #else
@@ -16,7 +19,10 @@
   <p>Directions:</p>
   <ul>
     #foreach($instruction in $instructions)
-      <li>$instruction.getStep() $instruction.getInstructionText()<a href="#">Edit</a><a href="#">Delete</a></li>
+      <li>$instruction.getStep() $instruction.getInstructionText()<a href="#">Edit</a>
+      <form action="$recipe.getId()/instructions/$instruction.getId()/remove" method="post">
+        <button type="submit" class="btn btn-info">Remove</button>
+      </form>
     #end
   </ul>
 #else
