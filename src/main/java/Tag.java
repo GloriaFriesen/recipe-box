@@ -7,7 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.sql.Timestamp;
 
-public class Tag {
+public class Tag implements DatabaseManagement {
   private int id;
   private String name;
 
@@ -15,6 +15,7 @@ public class Tag {
     this.name = name;
   }
 
+  @Override
   public int getId() {
     return id;
   }
@@ -37,6 +38,7 @@ public class Tag {
     }
   }
 
+  @Override
   public void save() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "INSERT INTO tags (name) VALUES (:name)";
@@ -47,6 +49,7 @@ public class Tag {
     }
   }
 
+  @Override
   public void update() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE tags SET name = :name WHERE id = :id";
@@ -57,6 +60,7 @@ public class Tag {
     }
   }
 
+  // @Override
   public static List<Tag> all() {
     String sql = "SELECT * FROM tags";
     try(Connection con = DB.sql2o.open()) {
@@ -64,6 +68,7 @@ public class Tag {
     }
   }
 
+  // @Override
   public static Tag find(int id) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM tags WHERE id=:id";
@@ -94,6 +99,7 @@ public class Tag {
     }
   }
 
+  @Override
   public void delete() {
     try(Connection con = DB.sql2o.open()) {
       String joinDeleteQuery = "DELETE FROM recipes_tags WHERE tag_id=:tag_id";

@@ -7,7 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.sql.Timestamp;
 
-public class Ingredient {
+public class Ingredient implements DatabaseManagement{
   private int id;
   private int recipe_id;
   private String measure;
@@ -19,6 +19,7 @@ public class Ingredient {
     this.ingredient_text = ingredient_text;
   }
 
+  @Override
   public int getId() {
     return id;
   }
@@ -55,6 +56,7 @@ public class Ingredient {
     }
   }
 
+  @Override
   public void save() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "INSERT INTO ingredients (recipe_id, measure, ingredient_text) VALUES (:recipe_id, :measure, :ingredient_text)";
@@ -84,6 +86,7 @@ public class Ingredient {
     }
   }
 
+  @Override
   public void delete() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "DELETE FROM ingredients WHERE id=:id";
@@ -93,6 +96,7 @@ public class Ingredient {
     }
   }
 
+  @Override
   public void update() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE ingredients SET measure = :measure, ingredient_text = :ingredient_text WHERE id=:id";
