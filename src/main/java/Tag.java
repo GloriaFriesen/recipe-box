@@ -23,6 +23,10 @@ public class Tag {
     return name;
   }
 
+  public void setName(String name) {
+    this.name = name;
+  }
+
   @Override
   public boolean equals(Object otherTag) {
     if (!(otherTag instanceof Tag)) {
@@ -37,9 +41,19 @@ public class Tag {
     try(Connection con = DB.sql2o.open()) {
       String sql = "INSERT INTO tags (name) VALUES (:name)";
       this.id = (int) con.createQuery(sql, true)
-      .addParameter("name", this.name)
+      .addParameter("name", name)
       .executeUpdate()
       .getKey();
+    }
+  }
+
+  public void update() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE tags SET name = :name WHERE id = :id";
+      con.createQuery(sql)
+      .addParameter("name", name)
+      .addParameter("id", id)
+      .executeUpdate();
     }
   }
 

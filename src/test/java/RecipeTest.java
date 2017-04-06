@@ -147,4 +147,16 @@ public class RecipeTest {
     assertEquals(0, testRecipe.getInstructions().size());
     assertEquals(0, testRecipe.getIngredients().size());
   }
+
+  @Test
+  public void update_updatesRecipeNameAndRating_StringAndInt() {
+    Recipe testRecipe = new Recipe("Lemon Meringue Pie");
+    testRecipe.save();
+    Recipe savedRecipe = Recipe.all().get(0);
+    savedRecipe.setName("Key Lime Pie");
+    savedRecipe.setRating(2);
+    savedRecipe.update();
+    assertEquals("Key Lime Pie", savedRecipe.getName());
+    assertEquals(2, savedRecipe.getRating());
+  }
 }

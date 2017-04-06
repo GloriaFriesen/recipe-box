@@ -92,4 +92,14 @@ public class TagTest {
     testTag.delete();
     assertEquals(0, testRecipe.getTags().size());
   }
+
+  @Test
+  public void update_updatesTagName_String() {
+    Tag testTag = new Tag("yunny");
+    testTag.save();
+    Tag savedTag = Tag.all().get(0);
+    savedTag.setName("yummy");
+    savedTag.update();
+    assertEquals("yummy", savedTag.getName());
+  }
 }

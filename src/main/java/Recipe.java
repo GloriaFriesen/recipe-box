@@ -25,8 +25,16 @@ public class Recipe {
     return name;
   }
 
+  public void setName(String name) {
+    this.name = name;
+  }
+
   public int getRating() {
     return rating;
+  }
+
+  public void setRating(int rating) {
+    this.rating = rating;
   }
 
   @Override
@@ -43,9 +51,20 @@ public class Recipe {
     try(Connection con = DB.sql2o.open()) {
       String sql = "INSERT INTO recipes (name) VALUES (:name)";
       this.id = (int) con.createQuery(sql, true)
-      .addParameter("name", this.name)
+      .addParameter("name", name)
       .executeUpdate()
       .getKey();
+    }
+  }
+
+  public void update() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE recipes SET name = :name, rating = :rating WHERE id = :id";
+      con.createQuery(sql)
+      .addParameter("name", name)
+      .addParameter("rating", rating)
+      .addParameter("id", id)
+      .executeUpdate();
     }
   }
 
