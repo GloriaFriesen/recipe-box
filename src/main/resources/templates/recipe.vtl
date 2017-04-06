@@ -37,3 +37,30 @@
   </div>
   <button type="submit" class="btn btn-success">Add Instruction</button>
 </form>
+
+<h2>Add existing tag</h2>
+  #if($tags)
+  <form action="tag/addExisting" method="post">
+    <select name="tag_id">
+    #foreach ($tag in $tags)
+      #if ($recipeTags.contains($tag))
+      #else
+        <option value="$tag.getId()">$tag.getName()</option>
+      #end
+    #end
+    </select>
+    <button type="submit" class="btn btn-success">Add tag</button>
+  </form>
+  #else
+  <p>There are no tags yet.</p>
+  #end
+
+<h2>Add new tag</h2>
+<form action="tags/new" method="post">
+  <input id="recipeId" name="recipeId" type="hidden" value="$recipe.getId()">
+  <div class="form-group">
+    <label for="tagName">Tag</label>
+    <input id="tagName" name="tagName" class="form-control" type="text" required>
+  </div>
+  <button type="submit" class="btn btn-success">Add Tag</button>
+</form>
