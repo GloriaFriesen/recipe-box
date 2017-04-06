@@ -136,6 +136,16 @@ public class Recipe implements DatabaseManagement {
     }
   }
 
+  public void removeTag(Tag tag) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM recipes_tags WHERE tag_id=:tag_id AND recipe_id=:recipe_id";
+      con.createQuery(sql)
+        .addParameter("tag_id", tag.getId())
+        .addParameter("recipe_id", this.id)
+        .executeUpdate();
+    }
+  }
+
   @Override
   public void delete() {
     try(Connection con = DB.sql2o.open()) {

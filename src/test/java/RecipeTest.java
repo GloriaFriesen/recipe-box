@@ -149,6 +149,17 @@ public class RecipeTest {
   }
 
   @Test
+  public void removeTag_removesTagFromRecipe_true() {
+    Recipe testRecipe = new Recipe("Lemon Meringue Pie");
+    testRecipe.save();
+    Tag testTag = new Tag("yummy");
+    testTag.save();
+    testRecipe.addTag(testTag);
+    testRecipe.removeTag(testTag);
+    assertEquals(0, testRecipe.getTags().size());
+  }
+
+  @Test
   public void update_updatesRecipeNameAndRating_StringAndInt() {
     Recipe testRecipe = new Recipe("Lemon Meringue Pie");
     testRecipe.save();

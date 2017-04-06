@@ -24,7 +24,7 @@
 
 #if ($recipeTags.size() > 0)
   #foreach($recipeTag in $recipeTags)
-    <a href="/tags/$recipeTag.getName()">$recipeTag.getName()</a> <a href="/recipes/tags/$recipeTag.getId()/remove/">Remove</a>
+    <a href="/tags/$recipeTag.getName()">$recipeTag.getName()</a> <a href="/recipes/$recipe.getId()/tags/$recipeTag.getId()/remove/">Remove</a>
   #end
 #else
 #end

@@ -109,5 +109,13 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    // post("recipes/:recipe_id/tags/:tag_id/remove", (request, response) -> {
+    //   Map<String, Object> model = new HashMap<String, Object>();
+    //   Recipe recipe = Recipe.find(Integer.parseInt(request.params("recipe_id")));
+    //   Tag tag = Tag.find(Integer.parseInt(request.params("tag_id")));
+    //
+    //
+    // }, new VelocityTemplateEngine());
+
   }
 }
