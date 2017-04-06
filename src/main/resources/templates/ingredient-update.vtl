@@ -1,0 +1,15 @@
+<!--ingredient-update.vtl-->
+
+<h2>Update $ingredient.getIngredientText()</h2>
+
+<form action="$recipe.getId()/ingredients/$ingredient.getId()/update" method="post">
+  <div class="form-group">
+    <label for="measure">Measurement</label>
+    <input id="measure" name="measure" type="text" class="form-control" value="$ingredient.getMeasure()" required>
+  </div>
+  <div class="form-group">
+    <label for="ingredient_text">Ingredient</label>
+    <input id="ingredient_text" name="ingredient_text" type="text" class="form-control" value="$ingredient.getIngredientText()" required>
+  </div>
+  <button type="submit" class="btn btn-success">Update Ingredient</button>
+</form>

@@ -139,5 +139,27 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    get("recipes/:recipe_id/ingredients/:ingredient_id/update", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Recipe recipe = Recipe.find(Integer.parseInt(request.params("recipe_id")));
+      Ingredient ingredient = Ingredient.find(Integer.parseInt(request.params("ingredient_id")));
+      model.put("recipe", recipe);
+      model.put("ingredient", ingredient);
+      model.put("template", "templates/ingredient-update.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("recipes/:recipe_id/ingredients/:ingredients_id/update", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Recipe recipe = Recipe.find(Integer.parseInt(request.params("recipe_id")));
+      Ingredient ingredient = Ingredient.find(Integer.parseInt(request.params("ingredient_id")));
+      ingredient.setMeasure(request.queryParams("measure"));
+      ingredient.setIngredientText(request.queryParams("ingredient_text"));
+      ingredient.update();
+      String url = String.format("recipes/%d", recipe.getId());
+      response.redirect(url);
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
   }
 }

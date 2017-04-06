@@ -6,7 +6,7 @@
   <p>Ingredients:</p>
   <ul>
     #foreach($ingredient in $ingredients)
-      <li>$ingredient.getMeasure() $ingredient.getIngredientText() <a href="#">Edit</a>
+      <li>$ingredient.getMeasure() $ingredient.getIngredientText() <a href="$recipe.getId()/ingredients/$ingredient.getId()/update">Edit</a>
       <form action="$recipe.getId()/ingredients/$ingredient.getId()/remove" method="post">
         <button type="submit" class="btn btn-info">Remove</button>
       </form>
