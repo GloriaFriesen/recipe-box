@@ -1,3 +1,39 @@
 <!--recipe.vtl-->
 
 <h2>$recipe.getName()</h2>
+
+#foreach($ingredient in $ingredients)
+  $ingredient.getIngredientText()
+  $ingredient.getMeasure()
+#end
+
+#foreach($instruction in $instructions)
+  $instruction.getStep()
+  $instruction.getInstructionText()
+#end
+
+<h2>Add Ingredient</h2>
+
+<form action="ingredients/new" method="post">
+  <input id="recipeId" name="recipeId" type="hidden" value="$recipe.getId()">
+  <div class="form-group">
+    <label for="measure">Measurement</label>
+    <input id="measure" name="measure" class="form-control" type="text" required>
+  </div>
+  <div class="form-group">
+    <label for="ingredientText">Ingredient</label>
+    <input id="ingredientText" name="ingredientText" class="form-control" type="text" required>
+  </div>
+  <button type="submit" class="btn btn-success">Add Ingredient</button>
+</form>
+
+<h2>Add Instruction</h2>
+
+<form action="instructions/new" method="post">
+  <input id="recipeId" name="recipeId" type="hidden" value="$recipe.getId()">
+  <div class="form-group">
+    <label for="instructionText">Instruction</label>
+    <input id="instructionText" name="instructionText" class="form-control" type="text" required>
+  </div>
+  <button type="submit" class="btn btn-success">Add Instruction</button>
+</form>
