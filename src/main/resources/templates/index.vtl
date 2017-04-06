@@ -1,3 +1,19 @@
 <!--index.vtl-->
 <h2>Recipe Box</h2>
+
+#if ($recipes.size() > 0)
+  #foreach($recipe in $recipes)
+    <h3><a href="/recipes/$recipe.getId()">$recipe.getName()</a></h3>
+  #end
+#else
+  <p>You have no recipes yet. Sad!</p>
+#end
+
+#if ($tags.size() > 0)
+  #foreach($tag in $tags)
+    <a href="/tags/$tag.getName()">$tag.getName()</a>
+  #end
+#else
+  <p>There are no tags.</p>
+#end
 <!--index.vtl-->

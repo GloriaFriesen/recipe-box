@@ -62,7 +62,7 @@ public class Tag implements DatabaseManagement {
 
   // @Override
   public static List<Tag> all() {
-    String sql = "SELECT * FROM tags";
+    String sql = "SELECT * FROM tags ORDER BY name";
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Tag.class);
     }
@@ -78,6 +78,17 @@ public class Tag implements DatabaseManagement {
       return tag;
     }
   }
+
+  public static Tag findByName(String name) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM tags WHERE name=:name";
+      Tag tag = con.createQuery(sql)
+      .addParameter("name", name)
+      .executeAndFetchFirst(Tag.class);
+      return tag;
+    }
+  }
+
 
   public List<Recipe> getRecipes() {
     try(Connection con = DB.sql2o.open()) {
@@ -98,6 +109,7 @@ public class Tag implements DatabaseManagement {
       return recipes;
     }
   }
+
 
   @Override
   public void delete() {

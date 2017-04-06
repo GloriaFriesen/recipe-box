@@ -72,7 +72,7 @@ public class Recipe implements DatabaseManagement {
   }
 
   public static List<Recipe> all() {
-    String sql = "SELECT * FROM recipes";
+    String sql = "SELECT * FROM recipes ORDER BY name";
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Recipe.class);
     }
@@ -98,7 +98,7 @@ public class Recipe implements DatabaseManagement {
   }
 
   public List<Instruction> getInstructions() {
-    String sql = "SELECT * FROM instructions WHERE recipe_id=:id";
+    String sql = "SELECT * FROM instructions WHERE recipe_id=:id ORDER BY step";
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql)
         .addParameter("id", this.id)
@@ -108,21 +108,21 @@ public class Recipe implements DatabaseManagement {
 
   public List<Tag> getTags() {
     try(Connection con = DB.sql2o.open()) {
-      String joinQuery = "SELECT tag_id FROM recipes_tags WHERE recipe_id=:recipe_id";
-      List<Integer> tagIds = con.createQuery(joinQuery)
-      .addParameter("recipe_id", this.getId())
-      .executeAndFetch(Integer.class);
+      String sql = "SELECT tags.id, tags.name FROM tags INNER JOIN recipes_tags ON tags.id = recipes_tags.tag_id WHERE recipe_id=:recipe_id ORDER BY name;";
+      List<Tag> tags = con.createQuery(sql)
+        .addParameter("recipe_id", this.getId())
+        .executeAndFetch(Tag.class);
+        return tags;
+    }
+  }
 
-      List<Tag> tags = new ArrayList<Tag>();
-
-      for (Integer tagId:tagIds) {
-        String tagQuery = "SELECT * FROM tags WHERE id=:tag_id";
-        Tag tag = con.createQuery(tagQuery)
-          .addParameter("tag_id", tagId)
-          .executeAndFetchFirst(Tag.class);
-        tags.add(tag);
-      }
-      return tags;
+  public List<Tag> getUnusedTags() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM tags WHERE id NOT IN (SELECT DISTINCT tag_id FROM recipes_tags WHERE recipe_id = :recipe_id);";
+      List<Tag> tags = con.createQuery(sql)
+        .addParameter("recipe_id", this.getId())
+        .executeAndFetch(Tag.class);
+        return tags;
     }
   }
 

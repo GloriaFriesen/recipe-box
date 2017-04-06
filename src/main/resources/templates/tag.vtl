@@ -1,0 +1,14 @@
+<!-- tag.vtl -->
+<h2>$tag.getName()</h2>
+
+#if ($recipes.size() > 0)
+  <p>
+    $tag.getName() recipes:
+  </p>
+  <ul>
+    #foreach($recipe in $recipes)
+    <li><a href="/recipes/$recipe.getId()">$recipe.getName()</a></li>
+    #end
+  </ul>
+#else
+#end  

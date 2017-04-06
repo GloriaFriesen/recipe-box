@@ -2,14 +2,31 @@
 
 <h2>$recipe.getName()</h2>
 
-#foreach($ingredient in $ingredients)
-  $ingredient.getIngredientText()
-  $ingredient.getMeasure()
+#if ($ingredients.size() > 0)
+  <p>Ingredients:</p>
+  <ul>
+    #foreach($ingredient in $ingredients)
+      <li>$ingredient.getMeasure() $ingredient.getIngredientText() <a href="#">Edit</a><a href="#">Delete</a></li>
+    #end
+  </ul>
+#else
 #end
 
-#foreach($instruction in $instructions)
-  $instruction.getStep()
-  $instruction.getInstructionText()
+#if ($instructions.size() > 0)
+  <p>Directions:</p>
+  <ul>
+    #foreach($instruction in $instructions)
+      <li>$instruction.getStep() $instruction.getInstructionText()<a href="#">Edit</a><a href="#">Delete</a></li>
+    #end
+  </ul>
+#else
+#end
+
+#if ($recipeTags.size() > 0)
+  #foreach($recipeTag in $recipeTags)
+    <a href="/tags/$recipeTag.getName()">$recipeTag.getName()</a> <a href="/recipes/tags/$recipeTag.getId()/remove/">Remove</a>
+  #end
+#else
 #end
 
 <h2>Add Ingredient</h2>
@@ -38,21 +55,18 @@
   <button type="submit" class="btn btn-success">Add Instruction</button>
 </form>
 
-<h2>Add existing tag</h2>
-  #if($tags)
+  #if($unusedTags.size() > 0)
+  <h2>Add existing tag</h2>
   <form action="tag/addExisting" method="post">
+    <input id="recipeId" name="recipeId" type="hidden" value="$recipe.getId()">
     <select name="tag_id">
-    #foreach ($tag in $tags)
-      #if ($recipeTags.contains($tag))
-      #else
-        <option value="$tag.getId()">$tag.getName()</option>
-      #end
+    #foreach ($unusedTag in $unusedTags)
+        <option value="$unusedTag.getId()">$unusedTag.getName()</option>
     #end
     </select>
     <button type="submit" class="btn btn-success">Add tag</button>
   </form>
   #else
-  <p>There are no tags yet.</p>
   #end
 
 <h2>Add new tag</h2>

@@ -46,9 +46,9 @@ public class TagTest {
 
   @Test
   public void all_returnsAllInstancesOfTag_true() {
-    Tag firstTag = new Tag("yummy");
+    Tag firstTag = new Tag("gross");
     firstTag.save();
-    Tag secondTag = new Tag("gross");
+    Tag secondTag = new Tag("yummy");
     secondTag.save();
     assertEquals(true, Tag.all().get(0).equals(firstTag));
     assertEquals(true, Tag.all().get(1).equals(secondTag));
@@ -61,6 +61,15 @@ public class TagTest {
     Tag secondTag = new Tag("gross");
     secondTag.save();
     assertEquals(Tag.find(secondTag.getId()), secondTag);
+  }
+
+  @Test
+  public void find_returnsTagWithSameName_secondTag() {
+    Tag firstTag = new Tag("yummy");
+    firstTag.save();
+    Tag secondTag = new Tag("gross");
+    secondTag.save();
+    assertEquals(Tag.findByName("gross"), secondTag);
   }
 
   @Test
